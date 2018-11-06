@@ -1,10 +1,10 @@
 
 
-
 class Projectile
 {
-    constructor()
+    constructor(s)
     {
+        this.name = s;
         this.x = 0;
         this.y = 0; 
         this.angle = 0;
@@ -13,12 +13,16 @@ class Projectile
         this.velocityY = 0;
         this.width = 5;
         this.height = 5;
+        this.fired = false;
     }
 
     update()
     {
         this.x += this.velocityX;
         this.y += this.velocityY;
+
+        this.velocityX = this.velocityX * Math.sin(this.angle) * this.speed;
+        this.velocityY = this.velocityY * Math.cos(this.angle) * this.speed;
     }
 
     render()
@@ -35,6 +39,11 @@ class Projectile
         this.y = y;
     }
 
+    IsFired()
+    {
+        return this.isFired;
+    }
+
     setAngle(a)
     {
         this.angle = a;
@@ -47,6 +56,9 @@ class Projectile
 
     fire()
     {
-
+        console.log("Fire!")
+        this.isFired = true;
+        this.velocityX = 1;
+        this.velocityY = -1;
     }
 }

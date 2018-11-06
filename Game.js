@@ -6,6 +6,12 @@ class Game
   constructor()
   {
     this.col = [255, 0, 0];
+    this.pm = new ProjectileManager();
+    this.p = new Projectile("pOne");
+    this.p.setPosition(100, 100);
+    this.p.setAngle(45);
+    this.p.setSpeed(1.2);
+    this.pm.addProjectile(this.p);
   }
 
   /**
@@ -36,6 +42,7 @@ class Game
   {
     gameNs.game.draw();
 
+    gameNs.game.pm.update();
     //Recursively call game.update here to create loop
     window.requestAnimationFrame(gameNs.game.update);
   }
@@ -48,6 +55,8 @@ class Game
     var canv = document.getElementById("mycanvas");
     var ctx = canv.getContext("2d");
     ctx.clearRect(0, 0, canv.width, canv.height);
+
+    this.pm.render();
   }
 }
 
@@ -68,7 +77,9 @@ function keyDownHandler(e)
 	case 37:
     //Left
 		break;
-	case 38:
+  case 38:
+    //this.pm.getProjectile("pOne").fire();
+    this.pm.fireProjectiles();
 		//Up
 		break;
 	case 39:
@@ -79,4 +90,5 @@ function keyDownHandler(e)
 		break;
 	}
   //Draw Call?
+
 }
