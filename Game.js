@@ -6,12 +6,21 @@ class Game
   constructor()
   {
     this.col = [255, 0, 0];
+    //Create projectile manager object
     this.pm = new ProjectileManager();
+    //Create single projectile
     this.p = new Projectile("pOne");
-    this.p.setPosition(100, 100);
+    //Set projectile attributes
+    this.p.setPosition(400, 600);
     this.p.setAngle(45);
-    this.p.setSpeed(1.2);
+    this.p.setSpeed(10);
+    this.pm.setGlobalGravity(2.1);
+    this.pm.setGlobalFriction(0.02);
+    //Push projectile into manager
     this.pm.addProjectile(this.p);
+    this.prevTime = 0;
+    this.mX = 0;
+    this.mY = 0;
   }
 
   /**
@@ -27,6 +36,11 @@ class Game
     canvas.height = window.innerHeight;
     document.body.appendChild(canvas);
 
+    window.addEventListener("mousemove", function(e){
+      gameNs.game.mX = e.clientX;
+      gameNs.game.mY = e.clientY;
+  });
+
     window.addEventListener("keydown", function(e)
     {
       if ([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1){
@@ -40,9 +54,14 @@ class Game
    */
   update()
   {
+    var now = Date.now();
+    var dt = (now - gameNs.game.prevTime);
+    gameNs.game.prevTime = now;
     gameNs.game.draw();
 
-    gameNs.game.pm.update();
+    //Update projectile manager
+    gameNs.game.pm.update(dt, gameNs.game.mX, gameNs.game.mY);
+    dt = 0;
     //Recursively call game.update here to create loop
     window.requestAnimationFrame(gameNs.game.update);
   }
@@ -56,6 +75,7 @@ class Game
     var ctx = canv.getContext("2d");
     ctx.clearRect(0, 0, canv.width, canv.height);
 
+    //Render projectiles through manager
     this.pm.render();
   }
 }
@@ -78,7 +98,7 @@ function keyDownHandler(e)
     //Left
 		break;
   case 38:
-    //this.pm.getProjectile("pOne").fire();
+    //Fire projectiles
     this.pm.fireProjectiles();
 		//Up
 		break;

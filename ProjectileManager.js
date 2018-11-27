@@ -1,7 +1,8 @@
-
-
 class ProjectileManager
 {
+    /**
+     * 
+     */
     constructor()
     {
         this.projectiles = [];
@@ -10,22 +11,38 @@ class ProjectileManager
         this.globalAirResistance;
     }
 
+    /**
+     * 
+     * @param {Projectile} p 
+     */
     addProjectile(p)
     {
         console.log("Added projectile");
         this.projectiles.push(p);
     }
 
+    /**
+     * 
+     * @param {String : name} s 
+     */
     createProjectile(s)
     {
         this.projectiles.push(new Projectile(s));
     }
 
+    /**
+     * 
+     * @param {Friction Value} v 
+     */
     setGlobalFriction(v)
     {
         this.globalFriction = v;
     }
 
+    /**
+     * 
+     * @param {Gravity Value} v 
+     */
     setGlobalGravity(v)
     {
         this.globalGravity = v;
@@ -56,13 +73,16 @@ class ProjectileManager
         }
     }
 
-    update()
+    update(dt, mx, my)
     {
+        var mouseX = mx;
+        var mouseY = my;
         for (var i = 0; i < this.projectiles.length; i++)
         {
+            this.projectiles[i].setMousePosition(mouseX, mouseY);
             if (this.projectiles[i].IsFired())
             {
-                this.projectiles[i].update();
+                this.projectiles[i].update(dt, this.globalGravity, this.globalFriction);
             }
         }
     }
