@@ -73,16 +73,14 @@ class ProjectileManager
         }
     }
 
-    update(dt, mx, my)
+    update()
     {
-        var mouseX = mx;
-        var mouseY = my;
         for (var i = 0; i < this.projectiles.length; i++)
         {
-            this.projectiles[i].setMousePosition(mouseX, mouseY);
+            this.projectiles[i].setMousePosition(gameNs.game.mX, gameNs.game.mY);
             if (this.projectiles[i].IsFired())
             {
-                this.projectiles[i].update(dt, this.globalGravity, this.globalFriction);
+                this.projectiles[i].update(this.globalGravity, this.globalFriction);
             }
         }
     }
@@ -94,5 +92,4 @@ class ProjectileManager
             this.projectiles[i].render();
         }
     }
-
 }

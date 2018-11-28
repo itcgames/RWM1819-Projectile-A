@@ -18,25 +18,27 @@ class Projectile
         this.mY = 0;
     }
 
-    update(dt, g, f)
+    update(g, f)
     {
         //Projectile Motion
         var tempX = this.x;
         var tempY = this.y;
-        var t = dt / 1000;
+        var t = gameNs.game.dt / 1000;
+        //var t = dt / 1000;
         this.x = tempX + this.velocityX * (t) * Math.cos(this.angle);
         this.y = tempY + this.velocityY * (t) * Math.sin(this.angle) - ((g * (t * t) / 2));
 
+        this.velocityY += g;
+        this.velocityX -= f;
 
         if (this.y < this.initialY)
         {
-            this.velocityY += g;
-            this.velocityX -= f;
+           
         }
         else
         {
-            this.velocityY = 0;
-            this.velocityX = 0;
+          //  this.velocityY = 0;
+          //  this.velocityX = 0;
         }
 
        // console.log("Gravity: " + g);
@@ -46,8 +48,8 @@ class Projectile
     render()
     {
         var canvas = document.getElementById('mycanvas');
- 	    var ctx = canvas.getContext('2d');
- 	    ctx.fillStyle = this.colour;
+        var ctx = canvas.getContext('2d');
+        ctx.fillStyle = this.colour;
         ctx.fillRect(this.x, this.y, this.width, this.height);
     }
 
@@ -67,6 +69,16 @@ class Projectile
         this.angle = a;
     }
 
+    getVelocity()
+    {
+        return new Vector2(this.velocityX / 20, this.velocityY / 20);
+    }
+
+    getPosition()
+    {
+        return new Vector2(this.x, this.y);
+    }
+
     setMousePosition(mx, my)
     {
         this.mX = mx;
@@ -82,17 +94,7 @@ class Projectile
         this.velocityX = -vx;
         this.velocityY = -vy;
 
-        //Calculate angle to cursor using arc tangent
-       // this.angle = Math.atan(vy / vx);
-
-        //Calculate velocity using mangnitude of vector cursor
-       // this.magV = Math.sqrt((vx * vx) + (vy * vy));
-
-       // this.velocityX = (vx / this.magV)  * Math.cos(this.angle);
-       // this.velocityY =  (vy / this.magV)  * Math.sin(this.angle);
-       // this.velocityX = this.velocityX * Math.round(this.magV);
-       // this.velocityY = this.velocityY * Math.round(this.magV);
-       this.initialY = this.y;
+        this.initialY = this.y;
 
         console.log("x: " + this.velocityX + " Y: " +  this.velocityY);
     }
@@ -102,7 +104,12 @@ class Projectile
         this.speed = s;
     }
 
-    fire(dt)
+    setFired(c)
+    {
+        this.isFired = c;
+    }
+
+    fire()
     {
         console.log("Fire!")
         this.isFired = true;

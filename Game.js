@@ -58,7 +58,6 @@ class Game
     var dt = (now - gameNs.game.prevTime);
     gameNs.game.prevTime = now;
     gameNs.game.draw();
-
     //Update projectile manager
     gameNs.game.pm.update(dt, gameNs.game.mX, gameNs.game.mY);
     dt = 0;
