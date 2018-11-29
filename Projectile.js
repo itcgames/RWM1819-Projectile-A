@@ -104,6 +104,17 @@ class Projectile
         this.speed = s;
     }
 
+    /**
+     * 
+     * @param {Float} v1 
+     * @param {Float} v2 
+     */
+    setVelocity(v1, v2)
+    {
+        this.velocityX = v1;
+        this.velocityY = v2;
+    }
+
     setFired(c)
     {
         this.isFired = c;
