@@ -71,7 +71,7 @@ class Projectile
 
     getVelocity()
     {
-        return new Vector2(this.velocityX / 20, this.velocityY / 20);
+        return new Vector2(this.velocityX / (1 / this.speed), this.velocityY / (1 / this.speed));
     }
 
     getPosition()
