@@ -57,7 +57,9 @@ class Projectile
         var canvas = document.getElementById('mycanvas');
         var ctx = canvas.getContext('2d');
         ctx.fillStyle = this.colour;
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, 8, 0, 2 * Math.PI);
+        ctx.stroke();
     }
 
     setPosition(x, y)
