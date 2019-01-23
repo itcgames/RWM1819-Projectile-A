@@ -1,7 +1,7 @@
 
 class Projectile
 {
-    constructor(s)
+    constructor(s, type)
     {
         this.name = s;
         this.x = 0;
@@ -16,33 +16,40 @@ class Projectile
         this.initialY = 0;
         this.mX = 0;
         this.mY = 0;
+        this.type = type;
     }
 
     update(g, f)
     {
-        //Projectile Motion
-        var tempX = this.x;
-        var tempY = this.y;
-        var t = gameNs.game.dt / 1000;
-        //var t = dt / 1000;
-        this.x = tempX + this.velocityX * (t) * Math.cos(this.angle);
-        this.y = tempY + this.velocityY * (t) * Math.sin(this.angle) - ((g * (t * t) / 2));
-
-        this.velocityY += g;
-        this.velocityX -= f;
-
-        if (this.y < this.initialY)
+        if (this.type === "simple")
         {
-           
+            this.x += this.velocityX;
+            this.y += this.velocityY;
         }
-        else
+        else if (this.type === "complex")
         {
-          //  this.velocityY = 0;
-          //  this.velocityX = 0;
+            //Projectile Motion
+            var tempX = this.x;
+            var tempY = this.y;
+            var t = gameNs.game.dt / 1000;
+            //var t = dt / 1000;
+            this.x = tempX + this.velocityX * (t) * Math.cos(this.angle);
+            this.y = tempY + this.velocityY * (t) * Math.sin(this.angle) - ((g * (t * t) / 2));
+
+            this.velocityY += g;
+            this.velocityX -= f;
+
+            if (this.y < this.initialY)
+            {
+               
+            }
+            else
+            {
+              //  this.velocityY = 0;
+              //  this.velocityX = 0;
+            }
         }
 
-       // console.log("Gravity: " + g);
-        //console.log("V::X: " + this.velocityX, "V::Y: " + this.velocityY);
     }
 
     render()
