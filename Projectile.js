@@ -56,10 +56,12 @@ class Projectile
     {
         var canvas = document.getElementById('mycanvas');
         var ctx = canvas.getContext('2d');
+        ctx.save();
         ctx.fillStyle = "red";
         ctx.beginPath();
         ctx.arc(this.x, this.y, 8, 0, 2 * Math.PI);
         ctx.fill();
+        ctx.restore();
     }
 
     setPosition(x, y)
