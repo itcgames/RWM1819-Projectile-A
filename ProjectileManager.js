@@ -64,6 +64,11 @@ class ProjectileManager
         }
     }
 
+    clearProjectiles()
+    {
+        this.projectiles.length = 0;
+    }
+
     fireProjectiles()
     {
         console.log("Fire Projectiles!");
