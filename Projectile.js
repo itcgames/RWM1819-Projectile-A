@@ -1,138 +1,109 @@
-
-class Projectile
+class ProjectileManager
 {
-    constructor(s, type)
+    /**
+     * 
+     */
+    constructor()
     {
-        this.name = s;
-        this.x = 0;
-        this.y = 0; 
-        this.angle = 0;
-        this.speed = 0;
-        this.velocityX = 0;
-        this.velocityY = 0;
-        this.width = 5;
-        this.height = 5;
-        this.fired = false;
-        this.initialY = 0;
-        this.mX = 0;
-        this.mY = 0;
-        this.type = type;
-    }
-
-    update(g, f)
-    {
-        if (this.type === "simple")
-        {
-            this.x += this.velocityX;
-            this.y += this.velocityY;
-        }
-        else if (this.type === "complex")
-        {
-            //Projectile Motion
-            var tempX = this.x;
-            var tempY = this.y;
-            var t = gameNs.game.dt / 1000;
-            //var t = dt / 1000;
-            this.x = tempX + this.velocityX * (t) * Math.cos(this.angle);
-            this.y = tempY + this.velocityY * (t) * Math.sin(this.angle) - ((g * (t * t) / 2));
-
-            this.velocityY += g;
-            this.velocityX -= f;
-
-            if (this.y < this.initialY)
-            {
-               
-            }
-            else
-            {
-              //  this.velocityY = 0;
-              //  this.velocityX = 0;
-            }
-        }
-
-    }
-
-    render()
-    {
-        var canvas = document.getElementById('mycanvas');
-        var ctx = canvas.getContext('2d');
-        ctx.fillStyle = "red";
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, 8, 0, 2 * Math.PI);
-        ctx.fill();
-    }
-
-    setPosition(x, y)
-    {
-        this.x = x;
-        this.y = y;
-    }
-
-    IsFired()
-    {
-        return this.isFired;
-    }
-
-    setAngle(a)
-    {
-        this.angle = a;
-    }
-
-    getVelocity()
-    {
-        return new Vector2(this.velocityX / (1 / this.speed), this.velocityY / (1 / this.speed));
-    }
-
-    getPosition()
-    {
-        return new Vector2(this.x, this.y);
-    }
-
-    setMousePosition(mx, my)
-    {
-        this.mX = mx;
-        this.mY = my;
-    }
-
-    calculateAngle()
-    {
-        //(vx, vy) vector to mouse pointer
-        var vx = this.x - this.mX;
-        var vy = this.y - this.mY;
-
-        this.velocityX = -vx;
-        this.velocityY = -vy;
-
-        this.initialY = this.y;
-
-        console.log("x: " + this.velocityX + " Y: " +  this.velocityY);
-    }
-
-    setSpeed(s)
-    {
-        this.speed = s;
+        this.projectiles = [];
+        this.globalGravity;
+        this.globalFriction;
+        this.globalAirResistance;
     }
 
     /**
      * 
-     * @param {Float} v1 
-     * @param {Float} v2 
+     * @param {Projectile} p 
      */
-    setVelocity(v1, v2)
+    addProjectile(p)
     {
-        this.velocityX = v1;
-        this.velocityY = v2;
+        console.log("Added projectile");
+        this.projectiles.push(p);
     }
 
-    setFired(c)
+    /**
+     * 
+     * @param {String : name} s 
+     */
+    createProjectile(s)
     {
-        this.isFired = c;
+        this.projectiles.push(new Projectile(s));
     }
 
-    fire()
+    /**
+     * 
+     * @param {Friction Value} v 
+     */
+    setGlobalFriction(v)
     {
-        console.log("Fire!")
-        this.isFired = true;
-        this.calculateAngle();
+        this.globalFriction = v;
     }
-}
+
+    /**
+     * 
+     * @param {Gravity Value} v 
+     */
+    setGlobalGravity(v)
+    {
+        this.globalGravity = v;
+    }
+
+    setGlobalAirResistance(v)
+    {
+        this.globalAirResistance = v;
+    }
+
+    getProjectile(s)
+    {
+        for (var i = 0; i < this.projectiles.length; i++)
+        {
+            if (this.projectiles[i].name == s)
+            {
+                return this.projectiles[i];
+            }
+        }
+    }
+
+    fireProjectiles()
+    {
+        console.log("Fire Projectiles!");
+        for (var i = 0; i < this.projectiles.length; i++)
+        {
+            this.projectiles[i].fire();
+        }
+    }
+
+    update()
+    {
+        for (var i = 0; i < this.projectiles.length; i++)
+        {
+
+
+            if (this.projectiles[i].type === "simple")
+            {
+                if (this.projectiles[i].IsFired())
+                {
+                    this.projectiles[i].update(this.globalGravity, this.globalFriction);
+                }
+            }
+            else{
+                //this.projectiles[i].setMousePosition(gameNs.game.mX, gameNs.game.mY);
+                if (this.projectiles[i].IsFired())
+                {
+                    this.projectiles[i].update(this.globalGravity, this.globalFriction);
+                }
+            }
+        }
+    }
+
+    render()
+    {
+        for (var i = 0; i < this.projectiles.length; i++)
+        {
+            if (this.projectiles[i].IsFired())
+            {
+                this.projectiles[i].render();
+            }
+        }
+    }
+}z
