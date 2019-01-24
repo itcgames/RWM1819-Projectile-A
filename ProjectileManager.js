@@ -87,6 +87,10 @@ class ProjectileManager
             {
                 this.projectiles[i].update(this.globalGravity, this.globalFriction);
             }
+            else
+            {
+                this.clearProjectiles();
+            }
         }
     }
 
