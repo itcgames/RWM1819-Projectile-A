@@ -17,10 +17,13 @@ class Projectile
         this.mX = 0;
         this.mY = 0;
         this.type = type;
+        this.ttl = 5;
+        this.timer = 0;
     }
 
     update(g, f)
     {
+        this.timer += 1 / 60;
         if (this.type === "simple")
         {
             this.x += this.velocityX * this.speed;
@@ -50,6 +53,10 @@ class Projectile
             }
         }
 
+        if (this.timer > this.ttl)
+        {
+            this.fired = false;
+        }
     }
 
     render()
@@ -68,6 +75,11 @@ class Projectile
     {
         this.x = x;
         this.y = y;
+    }
+
+    setTimeToLive(t)
+    {
+        this.ttl = t;
     }
 
     IsFired()
