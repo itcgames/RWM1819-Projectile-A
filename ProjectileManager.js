@@ -71,7 +71,7 @@ class ProjectileManager
     {
         for (var i = 0; i < this.projectiles.length; i++)
         {
-            if (this.projectiles[i].name == s)
+            if (this.projectiles[i].name === s)
             {
                 return this.projectiles[i];
             }
@@ -111,6 +111,9 @@ class ProjectileManager
             if (this.projectiles[i].IsFired())
             {
                 this.projectiles[i].update(this.globalGravity, this.globalFriction);
+                if (this.projectiles[i].type === "interceptor"){
+                    
+                }
             }
         }
     }

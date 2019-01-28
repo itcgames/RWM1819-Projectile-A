@@ -1,18 +1,17 @@
-class Game
-{
+class Game {
   /**
-	  * @constructor - Creates game object and player and goal objs
- 	 */
-  constructor()
-  {
+   * @constructor - Creates game object and player and goal objs
+   */
+  constructor() {
     this.col = [255, 0, 0];
     //Create projectile manager object
     this.pm = new ProjectileManager();
     //Create single projectile
     this.p = new Projectile("pOne", "complex");
+    this.interceptor = new Projectile("pTwo", "interceptor");
     //Set projectile attributes
     this.p.setPosition(400, 600);
-    this.p.setVelocity(0,-10);
+    this.p.setVelocity(0, -10);
     this.p.setAngle(90);
     this.p.setSpeed(50);
     this.p.setDebugModeEnable(true);
@@ -27,10 +26,9 @@ class Game
   }
 
   /**
-    * Initialises canvas and adds event listener
+   * Initialises canvas and adds event listener
    */
-  initWorld()
-  {
+  initWorld() {
     document.addEventListener("keydown", keyDownHandler.bind(this));
     var canvas = document.createElement("canvas");
     canvas.id = 'mycanvas';
@@ -39,24 +37,22 @@ class Game
     canvas.height = window.innerHeight;
     document.body.appendChild(canvas);
 
-    window.addEventListener("mousemove", function(e){
+    window.addEventListener("mousemove", function (e) {
       gameNs.game.mX = e.clientX;
       gameNs.game.mY = e.clientY;
-  });
+    });
 
-    window.addEventListener("keydown", function(e)
-    {
-      if ([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1){
+    window.addEventListener("keydown", function (e) {
+      if ([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
         e.preventDefault();
-    }
+      }
     }, false);
   }
 
   /**
    * Calls draw then update to create infinite game loop
    */
-  update()
-  {
+  update() {
     var now = Date.now();
     var dt = (now - gameNs.game.prevTime);
     gameNs.game.dt = dt;
@@ -72,8 +68,7 @@ class Game
   /**
    * Calls draw function in player and goal objects
    */
-  draw()
-  {
+  draw() {
     var canv = document.getElementById("mycanvas");
     var ctx = canv.getContext("2d");
     ctx.clearRect(0, 0, canv.width, canv.height);
@@ -84,33 +79,31 @@ class Game
 }
 
 /**
-* @param {Event} e
-* Function for the switch cases to allow input from arrow keys
-*	Clears the canvas also
-*/
-function keyDownHandler(e)
-{
-	var canvas = document.getElementById("mycanvas");
+ * @param {Event} e
+ * Function for the switch cases to allow input from arrow keys
+ *	Clears the canvas also
+ */
+function keyDownHandler(e) {
+  var canvas = document.getElementById("mycanvas");
 
-	var ctx = canvas.getContext("2d");
+  var ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-	switch (e.keyCode)
-	{
-	case 37:
-    //Left
-		break;
-  case 38:
-    //Fire projectiles
-    this.pm.fireProjectiles();
-		//Up
-		break;
-	case 39:
-		//Right
-		break;
-	case 40:
-		//Down
-		break;
-	}
+  switch (e.keyCode) {
+    case 37:
+      //Left
+      break;
+    case 38:
+      //Fire projectiles
+      this.pm.fireProjectiles();
+      //Up
+      break;
+    case 39:
+      //Right
+      break;
+    case 40:
+      //Down
+      break;
+  }
   //Draw Call?
 }
