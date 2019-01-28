@@ -16,8 +16,8 @@ class Projectile
         this.speed = 0;
         this.velocityX = 0;
         this.velocityY = 0;
-        this.width = 5;
-        this.height = 5;
+        this.width = 8;
+        this.height = 8;
         this.fired = false;
         this.initialY = 0;
         this.mX = 0;
@@ -25,6 +25,7 @@ class Projectile
         this.type = type;
         this.ttl = 5;
         this.timer = 0;
+        this.debugMode = false;
     }
 
     /**
@@ -46,11 +47,17 @@ class Projectile
             //Projectile Motion
             var tempX = this.x;
             var tempY = this.y;
-            var t = gameNs.game.dt / 1000;
+            var t = gameNs.game.dt / 100;
             //var t = dt / 1000;
-            this.x = tempX + this.velocityX * (t) * Math.cos(this.angle);
-            this.y = tempY + this.velocityY * (t) * Math.sin(this.angle) - ((g * (t * t) / 2));
+            this.velocityX * this.speed * 100;
+            this.velocityY * this.speed * 100;
+            tempX = this.velocityX * Math.cos(this.degreesToRadians(this.angle));
+            tempY = this.velocityY * Math.sin(this.degreesToRadians(this.angle)) - ((g / 2));
+        
+            console.log("X: ", this.x, " ", "Y : ", this.y);
 
+            this.x += this.velocityX;
+            this.y += this.velocityY;
             this.velocityY += g;
             this.velocityX -= f;
 
@@ -61,7 +68,7 @@ class Projectile
             else
             {
               //  this.velocityY = 0;
-              //  this.velocityX = 0;
+                //this.velocityX = 0;
             }
         }
 
@@ -78,12 +85,32 @@ class Projectile
     {
         var canvas = document.getElementById('mycanvas');
         var ctx = canvas.getContext('2d');
-        ctx.save();
-        ctx.fillStyle = "red";
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, 8, 0, 2 * Math.PI);
-        ctx.fill();
-        ctx.restore();
+
+        if (this.debugMode)
+        {
+            ctx.save();
+            ctx.strokeStyle = "#20FF00";
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.width, 0, 2 * Math.PI);
+            ctx.stroke();
+            ctx.restore();
+
+            ctx.save();
+            ctx.strokeStyle = "red";
+            ctx.beginPath();
+            ctx.moveTo(this.x, this.y);
+            ctx.lineTo(this.x + this.velocityX * 10, this.y + this.velocityY * 10);
+            ctx.stroke();
+            ctx.restore();
+        }
+        else{
+            ctx.save();
+            ctx.fillStyle = "blue";
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.width, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.restore();
+        }
     }
 
     /**
@@ -116,6 +143,16 @@ class Projectile
     IsFired()
     {
         return this.isFired;
+    }
+    
+    /**
+     * Sets debug draw mode to 
+     * true or false
+     * @param {bool} s 
+     */
+    setDebugModeEnable(s)
+    {
+        this.debugMode = s;
     }
 
     /**
@@ -218,10 +255,17 @@ class Projectile
         {
             this.isFired = true;
         }
-        else{
+        else if (this.type === "complex")
+        {
             console.log("Fire!")
             this.isFired = true;
+    
             //this.calculateAngle();
         }
+    }
+
+    degreesToRadians(a)
+    {
+        return a * (180 / Math.PI);
     }
 }

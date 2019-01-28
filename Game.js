@@ -12,10 +12,11 @@ class Game
     this.p = new Projectile("pOne", "complex");
     //Set projectile attributes
     this.p.setPosition(400, 600);
-    this.p.setVelocity(1,-1);
-    this.p.setAngle(45);
-    this.p.setSpeed(2);
-    this.pm.setGlobalGravity(2.1);
+    this.p.setVelocity(0,-10);
+    this.p.setAngle(90);
+    this.p.setSpeed(50);
+    this.p.setDebugModeEnable(true);
+    this.pm.setGlobalGravity(0.5);
     this.pm.setGlobalFriction(0.02);
     //Push projectile into manager
     this.pm.addProjectile(this.p);
@@ -58,6 +59,7 @@ class Game
   {
     var now = Date.now();
     var dt = (now - gameNs.game.prevTime);
+    gameNs.game.dt = dt;
     gameNs.game.prevTime = now;
     gameNs.game.draw();
     //Update projectile manager
@@ -111,5 +113,4 @@ function keyDownHandler(e)
 		break;
 	}
   //Draw Call?
-
 }
