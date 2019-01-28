@@ -1,6 +1,12 @@
 
 class Projectile
 {
+    /**
+     * Create a new projectile with a name
+     * and type(simple or complex).
+     * @param {string - name} s 
+     * @param {string} type 
+     */
     constructor(s, type)
     {
         this.name = s;
@@ -21,6 +27,12 @@ class Projectile
         this.timer = 0;
     }
 
+    /**
+     * Calculates projectile trajectory 
+     * and updates position
+     * @param {int - gravity} g 
+     * @param {int - friction} f 
+     */
     update(g, f)
     {
         this.timer += 1 / 60;
@@ -59,6 +71,9 @@ class Projectile
         }
     }
 
+    /**
+     * Draws the projectiles
+     */
     render()
     {
         var canvas = document.getElementById('mycanvas');
@@ -71,43 +86,83 @@ class Projectile
         ctx.restore();
     }
 
+    /**
+     * Sets the X/Y coordinate
+     * of the projectile after
+     * declaration
+     * @param {int} x 
+     * @param {int} y 
+     */
     setPosition(x, y)
     {
         this.x = x;
         this.y = y;
     }
 
+    /**
+     * Sets the time to live
+     * in seconds of the projectile
+     * @param {int} t 
+     */
     setTimeToLive(t)
     {
         this.ttl = t;
     }
 
+    /**
+     * Returns true if 
+     * projectile is fired
+     */
     IsFired()
     {
         return this.isFired;
     }
 
+    /**
+     * Sets the angle of the 
+     * projectile after declaration
+     * @param {int} a 
+     */
     setAngle(a)
     {
         this.angle = a;
     }
 
+    /**
+     * Returns the velocity of the
+     * projectile as a Vector2
+     */
     getVelocity()
     {
         return new Vector2(this.velocityX / (1 / this.speed), this.velocityY / (1 / this.speed));
     }
 
+    /**
+     * Returns the position of the
+     * projectile as a Vector2
+     */
     getPosition()
     {
         return new Vector2(this.x, this.y);
     }
 
+    /**
+     * Sets the mouse position variable
+     * for the projectile
+     * @param {int} mx 
+     * @param {int} my 
+     */
     setMousePosition(mx, my)
     {
         this.mX = mx;
         this.mY = my;
     }
 
+    /**
+     * Calculates the angle between the projectile
+     * start position and current mouse position,
+     * and creates a vector to the mouse coordinate
+     */
     calculateAngle()
     {
         //(vx, vy) vector to mouse pointer
@@ -122,6 +177,11 @@ class Projectile
         console.log("x: " + this.velocityX + " Y: " +  this.velocityY);
     }
 
+    /**
+     * Sets the speed of the 
+     * projectile.
+     * @param {int} s 
+     */
     setSpeed(s)
     {
         this.speed = s;
@@ -138,11 +198,20 @@ class Projectile
         this.velocityY = v2;
     }
 
+    /**
+     * Sets the projectile isFired
+     * bool
+     * @param {bool} c 
+     */
     setFired(c)
     {
         this.isFired = c;
     }
 
+    /**
+     * Checks the projectile type
+     * and sets it to isFired
+     */
     fire()
     {
         if (this.type === "simple")
@@ -152,7 +221,7 @@ class Projectile
         else{
             console.log("Fire!")
             this.isFired = true;
-            this.calculateAngle();
+            //this.calculateAngle();
         }
     }
 }

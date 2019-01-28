@@ -1,7 +1,8 @@
 class ProjectileManager
 {
     /**
-     * 
+     * Create a new ProjectileManager
+     * object
      */
     constructor()
     {
@@ -12,7 +13,8 @@ class ProjectileManager
     }
 
     /**
-     * 
+     * Push projectile into array of 
+     * projectiles stored in manager
      * @param {Projectile} p 
      */
     addProjectile(p)
@@ -22,7 +24,8 @@ class ProjectileManager
     }
 
     /**
-     * 
+     * Pushes back a new projectile with
+     * no set properties
      * @param {String : name} s 
      */
     createProjectile(s)
@@ -31,8 +34,9 @@ class ProjectileManager
     }
 
     /**
-     * 
-     * @param {Friction Value} v 
+     * Sets friction value for all
+     * projectiles fired from the manager
+     * @param {Int - value} v 
      */
     setGlobalFriction(v)
     {
@@ -40,19 +44,29 @@ class ProjectileManager
     }
 
     /**
-     * 
-     * @param {Gravity Value} v 
+     * Sets gravity value for all projectiles
+     * fired from the manager
+     * @param {Int - Value} v 
      */
     setGlobalGravity(v)
     {
         this.globalGravity = v;
     }
 
+    /**
+     * 
+     * @param {Int - value} v 
+     */
     setGlobalAirResistance(v)
     {
         this.globalAirResistance = v;
     }
 
+    /**
+     * Searches the array for the projectile with
+     * the key of 's' and returns it.
+     * @param {string - name} s 
+     */
     getProjectile(s)
     {
         for (var i = 0; i < this.projectiles.length; i++)
@@ -64,11 +78,18 @@ class ProjectileManager
         }
     }
 
+    /**
+     * Clears all the projectiles in the array
+     */
     clearProjectiles()
     {
         this.projectiles.length = 0;
     }
 
+    /**
+     * Loop through all projectiles in the array
+     * and sets them to fired.
+     */
     fireProjectiles()
     {
         console.log("Fire Projectiles!");
@@ -78,6 +99,10 @@ class ProjectileManager
         }
     }
 
+    /**
+     * Calls updated function on all projectiles
+     * in the manager array
+     */
     update()
     {
         for (var i = 0; i < this.projectiles.length; i++)
@@ -90,6 +115,10 @@ class ProjectileManager
         }
     }
 
+    /**
+     * Renders all the projectils in the manager
+     * array
+     */
     render()
     {
         for (var i = 0; i < this.projectiles.length; i++)

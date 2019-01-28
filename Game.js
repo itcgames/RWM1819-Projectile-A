@@ -9,11 +9,12 @@ class Game
     //Create projectile manager object
     this.pm = new ProjectileManager();
     //Create single projectile
-    this.p = new Projectile("pOne");
+    this.p = new Projectile("pOne", "complex");
     //Set projectile attributes
     this.p.setPosition(400, 600);
+    this.p.setVelocity(1,-1);
     this.p.setAngle(45);
-    this.p.setSpeed(10);
+    this.p.setSpeed(2);
     this.pm.setGlobalGravity(2.1);
     this.pm.setGlobalFriction(0.02);
     //Push projectile into manager
@@ -21,6 +22,7 @@ class Game
     this.prevTime = 0;
     this.mX = 0;
     this.mY = 0;
+    this.dt = 0;
   }
 
   /**
