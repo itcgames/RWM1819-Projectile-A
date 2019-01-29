@@ -8,12 +8,12 @@ class Game {
     this.pm = new ProjectileManager();
     //Create single projectile
     this.p = new Projectile("pOne", "complex");
-    this.interceptor = new Projectile("pTwo", "interceptor");
     //Set projectile attributes
     this.p.setPosition(400, 600);
-    this.p.setVelocity(0, -10);
-    this.p.setAngle(90);
+    this.p.setVelocity(10, -10);
+    this.p.setAngle(45);
     this.p.setSpeed(50);
+    //Enable Debug draw mode
     this.p.setDebugModeEnabled(true);
     this.pm.setGlobalGravity(0.5);
     this.pm.setGlobalFriction(0.02);

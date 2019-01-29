@@ -7,14 +7,12 @@ class Game {
     //Create projectile manager object
     this.pm = new ProjectileManager();
     //Create single projectile
-    this.p = new Projectile("pOne", "complex");
-    this.interceptor = new Projectile("pTwo", "interceptor");
+    this.p = new Projectile("pOne", "simple");
     //Set projectile attributes
     this.p.setPosition(400, 600);
-    this.p.setVelocity(0, -10);
-    this.p.setAngle(90);
-    this.p.setSpeed(50);
-    this.p.setDebugModeEnabled(true);
+    this.p.setVelocity(1, -1);
+    this.p.setAngle(45);
+    this.p.setSpeed(5);
     this.pm.setGlobalGravity(0.5);
     this.pm.setGlobalFriction(0.02);
     //Push projectile into manager
